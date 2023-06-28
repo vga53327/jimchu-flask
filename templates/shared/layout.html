@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <!-- bootstrap.css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Website</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">首頁</a>
+                </li>
+                {% if auth_user.is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/product/create">建立商品</a>
+                </li>
+                {% endif %}
+                {% if not auth_user.is_login %}
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#signUpModal" href="#">註冊</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#loginModal" href="#">登入</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link">{{ auth_user.user.email }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="logoutBtn" href="#">登出</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <!-- navbar end -->
+    <!-- TODO: 
+        使用 get_flashed_messages 取得所有伺服器快訊
+        並套用Bootstrap 4 Alert 元件
+        https://getbootstrap.com/docs/4.4/components/alerts/
+    -->
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+        {% if msgs %}
+            {% for color,msg in msgs %}
+                <div class="alert alert-{{color}} alert-dismissible fade show mb-0" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <!-- modals -->
+    {% include 'shared/login_modal.html' %}
+    {% include 'shared/sign_up_modal.html' %}
+    <!-- modals end -->
+
+    <header class="jumbotron" style="background-image: url({{header_img}})">
+        <div class="container">
+            <h1>{{ header_title }}</h1>
+        </div>
+    </header>
+    <!-- body block -->
+    {% block body %}
+
+    {% endblock %}
+    <!-- body block end -->
+
+    <!-- jquery.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <!-- bootstrap.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4iN9xC4bGm1QKKGNl_O_e6ZDLPEPzHdg",
+            authDomain: "jim-flask-ntu341.firebaseapp.com",
+            projectId: "jim-flask-ntu341",
+            storageBucket: "jim-flask-ntu341.appspot.com",
+            messagingSenderId: "520788640417",
+            appId: "1:520788640417:web:1420705b9a8821ee9aa6e0"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const csrf = "{{ csrf_token() }}"
+    </script>
+    <!-- axios.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <!-- main.js -->
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

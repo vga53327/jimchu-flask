@@ -1,0 +1,9 @@
+.jumbotron{
+    background-size: cover;
+    color: white;
+    /* x y blur color */
+    text-shadow: 2px 2px 0px black;
+    height: 300px;
+    background-position: center center;
+    border-radius: 0px;
+}

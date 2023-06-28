@@ -1,0 +1,26 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<section>
+    <div class="container">
+        <h2>你已成功建立了: {{ product.title }}</h2>
+        <!-- TODO: 顯示剛才被成功產生的產品資訊 -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>title</th>
+                    <th>value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key,value in product.items() %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/">回到首頁</a>
+    </div>
+</section>
+{% endblock %}

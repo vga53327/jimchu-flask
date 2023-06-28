@@ -1,0 +1,29 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<section>
+    <div class="container">
+        <h2>產品列表</h2>
+        <div class="row">
+            {% for product in product_list %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img class="card-img-top" src="{{product.img}}", alt='{{product.title}}'>
+                    <div class="card-body">
+                        <div class="card-title">
+                            {{product.title}}
+                        </div>
+                        <p class="card-text">
+                            {{product.price}}
+                        </p>
+                        <div>
+                            <a href="/product/{{product.id}}/show" class="btn btn-primary">Details</a>
+                            <a href="/product/{{product.id}}/edit" class="btn btn-primary" style="background-color: yellowgreen;">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
+    </div>
+</section>
+{% endblock %}

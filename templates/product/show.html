@@ -1,0 +1,55 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<!-- 顯示商品詳細資料 -->
+<section>
+    <div class="container">
+        <h1>{{ product.title }}</h1>
+        <span class="badge badge-info">{{ product.category }}</span>
+        <h2>$ {{ product.price }}</h2>
+        <p>{{ product.text }}</p>
+        <a href="/">Home</a>
+
+        {% if auth_user.is_login %}
+        <div class="card mt-3">
+            <div class="card-header">Create comment</div>
+            <form method="POST" class="card-body">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(value=auth_user.user.email, readonly=True, class="form-control", type="email") }}
+                </div>
+                <div class="form-group">
+                    {{ form.content.label }}
+                    {{ form.content(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+        {% endif %}
+
+        {% for comment in comment_list %}
+        <div class="card mt-3">
+            <div class="card-header">{{ comment.email }}</div>
+            <div class="card-body">
+                <p>{{ comment.content }}</p>
+                {% if auth_user.user.email == comment.email %}
+                <form method="POST">
+                    {{ comment.form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ comment.form.content.label }}
+                        {{ comment.form.content(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ comment.form.submit(class="btn btn-warning") }}
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}
