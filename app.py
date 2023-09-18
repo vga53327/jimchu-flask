@@ -278,4 +278,4 @@ if __name__ == '__main__':
     dev_host = '127.0.0.1'
     heroku_host = '0.0.0.0'
     # 應用程式開始運行
-    app.run(debug=True, host=heroku_host, port=port)
+    app.run(debug=True, host=dev_host, port=port)
