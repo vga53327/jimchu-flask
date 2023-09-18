@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 import time
 import datetime
 # TODO: 引用各種表單類別
+import os
 
 from forms import (
     CreateProductForm,
@@ -273,5 +274,8 @@ def edit_product_page(pid):
 
 
 if __name__ == '__main__':
+    port = int(os.environ.get("PORT",5000))
+    dev_host = '127.0.0.1'
+    heroku_host = '0.0.0.0'
     # 應用程式開始運行
-    app.run()
+    app.run(debug=True, host=heroku_host, port=port)
