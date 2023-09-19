@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, BooleanField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
-from wtforms.widgets.html5 import NumberInput
+# from wtforms.widgets.html5 import NumberInput
+from wtforms.widgets import NumberInput
 
 category_options = [
     # ("選到真正會被送到後端的資料", "提示文字")
